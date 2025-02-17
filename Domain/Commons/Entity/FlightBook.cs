@@ -27,9 +27,8 @@ namespace Fly.Model.Entity
         public virtual DateTimeOffset BookingDate { get; set; }
 
         [Required]
-        public virtual BookingStatus Status { get; set; }
+        //public virtual BookingStatus Status { get; set; }
 
-        [Required]
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal TotalPrice { get; set; }
 
@@ -39,6 +38,6 @@ namespace Fly.Model.Entity
         
         public virtual Flight Flight { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<BookingSeat> BookedSeats { get; set; }
+        //public virtual ICollection<BookingSeat> BookedSeats { get; set; }
     }
 }
