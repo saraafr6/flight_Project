@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Fly.Model.Entity
+namespace Domain.Commons.Entities
 {
     [Table("Payment", Schema = "dbo")]
     public class Payment : EntityBase

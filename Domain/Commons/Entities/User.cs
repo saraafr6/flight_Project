@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fly.Model.Entity
+namespace Domain.Commons.Entities
 {
     [Table("User", Schema = "dbo")]
     public class User : EntityBase
@@ -22,6 +22,10 @@ namespace Fly.Model.Entity
         [MaxLength(100)]
         public virtual string LastName { get; set; }
 
+
+        [MaxLength(100)]
+        public virtual string  UserName { get; set; }
+
         [Column(TypeName = "char(11)")]
         public virtual string MobileNumber { get; set; }
 
@@ -39,7 +43,7 @@ namespace Fly.Model.Entity
 
         public virtual DateTimeOffset? CreateDateTime { get; set; }
 
-        public virtual List<UserAuthentication> UserAuthentication { get; set; }
+        //public virtual List<UserAuthentication> UserAuthentication { get; set; }
         public virtual List<FlightBook> Bookings { get; set; }
     }
 }

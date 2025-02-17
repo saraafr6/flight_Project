@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fly.Model.Entity
+namespace Domain.Commons.Entities
+
 {
     [Table("Flight", Schema = "dbo")]
     public class Flight : EntityBase
     {
+        public Flight() { }
         public Flight(bool initialize) : base(initialize)
         {
-
+            
         }
 
         [Required]

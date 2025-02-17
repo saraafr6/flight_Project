@@ -1,5 +1,4 @@
-﻿
-namespace Fly.Model.Entity
+﻿namespace Domain.Commons.Entities
 {
     public abstract class EntityBase
     {

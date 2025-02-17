@@ -1,14 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Commons.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+namespace Infrastructure.Data
 
-namespace Infrustructure.Data
 {
     public class FlyDbContext : DbContext
     {
+        public DbSet<Flight> Flight { get; set; }
+        public DbSet<FlightBook> FlightBooks { get; set; }
+        public DbSet<User> User { get; set; }
+        
+
+
         public FlyDbContext(DbContextOptions<FlyDbContext> options)
             : base(options)
         {
         }
+
+       
         public FlyDbContext()
             : base(new DbContextOptionsBuilder<FlyDbContext>()
                     .UseSqlServer(Configuration().GetConnectionString("AppConectionString"), sqlServerOptions => sqlServerOptions.CommandTimeout(20*60)).Options)
@@ -19,11 +28,13 @@ namespace Infrustructure.Data
         {
             IConfiguration config = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory) 
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) 
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
             .Build();
 
             return config;
         }
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
@@ -43,6 +54,5 @@ namespace Infrustructure.Data
         //    //            .WillCascadeOnDelete(false);
         //}
 
-        //public DbSet<User> User { get; set; }
     }
 }

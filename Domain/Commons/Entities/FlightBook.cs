@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fly.Model.Entity
+namespace Domain.Commons.Entities
 {
 
     [Table("FlightBook", Schema = "dbo")]
@@ -18,10 +18,10 @@ namespace Fly.Model.Entity
         }
 
         [Required]
-        public virtual int FlightId { get; set; }
+        public virtual Guid FlightId { get; set; }
 
         [Required]
-        public virtual int UserId { get; set; }
+        public virtual Guid UserId { get; set; }
 
         [Required]
         public virtual DateTimeOffset BookingDate { get; set; }
@@ -32,7 +32,7 @@ namespace Fly.Model.Entity
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal TotalPrice { get; set; }
 
-        public virtual bool? IsActive { get; set; }
+        public virtual bool IsActive { get; set; }
         public virtual DateTimeOffset? CreateDateTime { get; set; }
 
         

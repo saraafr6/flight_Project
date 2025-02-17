@@ -1,8 +1,8 @@
-﻿using Infrustructure.Data;
+﻿using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrustructure.Migration
+namespace Infrustructure.Data
 {
     public class MigrateDbContext : FlyDbContext
     {
