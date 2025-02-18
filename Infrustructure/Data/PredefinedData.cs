@@ -50,16 +50,16 @@ namespace Infrastructure.Data
     public static class UserPredefinedData
     {
         private static readonly (string firstName, string lastName)[] _names = {
-            ("علی", "محمدی"),
-            ("مریم", "حسینی"),
-            ("رضا", "کریمی"),
-            ("زهرا", "رضایی"),
-            ("محمد", "صادقی"),
-            ("فاطمه", "موسوی"),
-            ("امیر", "احمدی"),
-            ("سارا", "نجفی"),
-            ("حسین", "عباسی"),
-            ("نرگس", "حیدری")
+            ("Sara", "Rezaei"),
+            ("Amir", "Hasani"),
+            ("Ali", "Karimi"),
+            ("Zahra", "Sadeghi"),
+            ("Elnaz", "Moridi"),
+            ("Zivar", "Kafi"),
+            ("Ala", "Mohseni"),
+            ("Hani", "Najafi"),
+            ("Rima", "Safi"),
+            ("Rosha", "Abbasi")
         };
 
         public static List<User> GetUsers() =>
@@ -70,7 +70,7 @@ namespace Infrastructure.Data
                 UserName = $"{name.firstName}.{name.lastName}".ToLower(),
                 MobileNumber = DataGeneratorHelpers.RandomMobile(),
                 Password = $"P@ssw0rd{index + 1}",
-                Email = $"{name.firstName}.{name.lastName}@example.com".ToLower(),
+                Email = $"{name.firstName}{name.lastName}563@gmail.com".ToLower(),
                 BirthDate = DataGeneratorHelpers.RandomDate(-12000, -8000),
                 IsActive = true,
                 RegisterDate = DataGeneratorHelpers.RandomDate(-100, -1),

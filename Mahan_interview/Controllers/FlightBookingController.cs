@@ -45,40 +45,6 @@ namespace Main.Api.Controllers
             return Ok(booking);
         }
 
-        [HttpPost]
-        [SwaggerOperation(Summary = "Create a new flight booking", Description = "Creates a new flight booking if seats are available, and sends a confirmation email to the user.")]
 
-        public async Task<IActionResult> CreateBooking([FromBody] FlightBook booking)
-        {
-            if (booking == null)
-                return BadRequest("Booking data is required.");
-
-            var flight = await _context.Flight.FindAsync(booking.FlightId);
-            if (flight == null)
-                return NotFound("Flight not found.");
-
-            if (flight.AvailableSeats <= await _context.FlightBook.CountAsync(b => b.FlightId == flight.Id))
-                return BadRequest("No seats available.");
-
-            _context.FlightBook.Add(booking);
-            await _context.SaveChangesAsync();
-
-            await _emailService.SendEmailAsync("sararezaei563@gmail.com", flight.FlightNumber, flight.DepartureTime.ToString("yyyy-MM-dd HH:mm"));
-            return CreatedAtAction(nameof(GetBookingById), new { id = booking.Id }, booking);
-        }
-
-        [HttpDelete("{id}")]
-        [SwaggerOperation(Summary = "Delete a booking", Description = "Deletes a specific flight booking by its unique identifier.")]
-
-        public async Task<IActionResult> DeleteBooking(int id)
-        {
-            var booking = await _context.FlightBook.FindAsync(id);
-            if (booking == null)
-                return NotFound("Booking not found.");
-
-            _context.FlightBook.Remove(booking);
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
     }
 }

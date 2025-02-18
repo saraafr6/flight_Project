@@ -57,6 +57,7 @@ namespace Domain.Commons.Entities
 
             return $"{airlineCode}{uniqueNumber:D4}{randomComponent}";
         }
+        
 
 
     }

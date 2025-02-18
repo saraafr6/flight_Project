@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Domain.Commons.Entities
 {
@@ -37,6 +38,7 @@ namespace Domain.Commons.Entities
 
         
         public virtual Flight Flight { get; set; }
+
         public virtual User User { get; set; }
         //public virtual ICollection<BookingSeat> BookedSeats { get; set; }
     }

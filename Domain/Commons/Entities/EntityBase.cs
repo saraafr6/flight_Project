@@ -2,6 +2,8 @@
 {
     public abstract class EntityBase
     {
+        
+
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
@@ -23,6 +25,7 @@
         public void Initialize()
         {
             Id = Guid.NewGuid();
+            CreatedBy = "SaraSystem";
             OnInitialize();
         }
         public virtual void OnInitialize()
