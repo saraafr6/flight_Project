@@ -1,6 +1,6 @@
 @Mahan_interview_HostAddress = http://localhost:5153
 
-GET {{Mahan_interview_HostAddress}}/weatherforecast/
+GET {{Mahan_interview_HostAddress}}/
 Accept: application/json
 
 ###
