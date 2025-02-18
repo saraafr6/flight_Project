@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Domain.Commons.Entities
 
@@ -41,7 +42,8 @@ namespace Domain.Commons.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        public virtual List<FlightBook> Bookings { get; set; }
+        [JsonIgnore]
+        public ICollection<FlightBook> Bookings { get; set; }
 
 
         private static long _counter = DateTime.UtcNow.Ticks % 10000;

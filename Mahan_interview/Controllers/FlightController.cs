@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 using Domain.Commons.Entities;
 
@@ -18,13 +19,16 @@ namespace Main.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFlights()
+        [SwaggerOperation(Summary = "Retrieve all flights", Description = "Fetches a list of all flights available.")]
+        public async Task<IActionResult> GetAllFlights()
         {
             var flights = await _context.Flight.ToListAsync();
             return Ok(flights);
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get flight by ID", Description = "Fetches a flight by its unique identifier.")]
+
         public async Task<IActionResult> GetFlightById(Guid id)
         {
             var flight = await _context.Flight
@@ -38,6 +42,9 @@ namespace Main.Api.Controllers
         }
 
         [HttpPost]
+
+        [SwaggerOperation(Summary = "Create a new flight", Description = "Creates a new flight and returns the created flight details.")]
+
         public async Task<IActionResult> CreateFlight([FromBody] Flight flight)
         {
             if (flight == null)
@@ -49,6 +56,8 @@ namespace Main.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [SwaggerOperation(Summary = "Update an existing flight", Description = "Updates the details of an existing flight.")]
+
         public async Task<IActionResult> UpdateFlight(Guid id, [FromBody] Flight flight)
         {
             if (flight == null || id != flight.Id)
@@ -71,6 +80,8 @@ namespace Main.Api.Controllers
 
         
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete a flight", Description = "Deletes a specific flight by its ID.")]
+
         public async Task<IActionResult> DeleteFlight(int id)
         {
             var flight = await _context.Flight.FindAsync(id);
@@ -84,6 +95,8 @@ namespace Main.Api.Controllers
 
        
         [HttpGet("{id}/bookings")]
+        [SwaggerOperation(Summary = "Get flight bookings", Description = "Returns all bookings related to a specific flight.")]
+
         public async Task<IActionResult> GetFlightBookings(Guid id)
         {
             var flight = await _context.Flight

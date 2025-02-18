@@ -6,14 +6,18 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AppConnectionString");
+
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddDbContext<FlyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AppConectionString")));
+    options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IFlightService, FlightService>();
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 builder.Services.AddScoped<IFlightBookRepository, FlightBookRepository>();
@@ -58,7 +62,10 @@ builder.Services.AddScoped<IEmailService>(provider =>
 });
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations(); 
+});
 
 var app = builder.Build();
 foreach (var config in builder.Configuration.AsEnumerable())
@@ -68,7 +75,8 @@ foreach (var config in builder.Configuration.AsEnumerable())
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<FlyDbContext>();
-    await MockData.SeedData(dbContext);
+    await dbContext.Database.MigrateAsync();
+    await DatabaseSeeder.SeedDatabaseAsync(dbContext);
 }
 if (app.Environment.IsDevelopment())
     {

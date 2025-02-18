@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Domain.Commons.Contract;
 using Domain.Commons.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Main.Api.Controllers
 {
@@ -21,16 +22,20 @@ namespace Main.Api.Controllers
 
        
         [HttpGet]
+        [SwaggerOperation(Summary = "Get all flight bookings", Description = "Retrieves a list of all flight bookings along with their associated flight details.")]
+
         public async Task<IActionResult> GetAllBookings()
         {
-            var bookings = await _context.FlightBooks.Include(b => b.Flight).ToListAsync();
+            var bookings = await _context.FlightBook.Include(b => b.Flight).ToListAsync();
             return Ok(bookings);
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get booking by ID", Description = "Retrieves the details of a specific flight booking by its unique identifier.")]
+
         public async Task<IActionResult> GetBookingById(Guid id)
         {
-            var booking = await _context.FlightBooks
+            var booking = await _context.FlightBook
                 .Include(b => b.Flight)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
@@ -41,6 +46,8 @@ namespace Main.Api.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Create a new flight booking", Description = "Creates a new flight booking if seats are available, and sends a confirmation email to the user.")]
+
         public async Task<IActionResult> CreateBooking([FromBody] FlightBook booking)
         {
             if (booking == null)
@@ -50,24 +57,26 @@ namespace Main.Api.Controllers
             if (flight == null)
                 return NotFound("Flight not found.");
 
-            if (flight.AvailableSeats <= await _context.FlightBooks.CountAsync(b => b.FlightId == flight.Id))
+            if (flight.AvailableSeats <= await _context.FlightBook.CountAsync(b => b.FlightId == flight.Id))
                 return BadRequest("No seats available.");
 
-            _context.FlightBooks.Add(booking);
+            _context.FlightBook.Add(booking);
             await _context.SaveChangesAsync();
 
-            await _emailService.SendEmailAsync("user@example.com", flight.FlightNumber, flight.DepartureTime.ToString("yyyy-MM-dd HH:mm"));
+            await _emailService.SendEmailAsync("sararezaei563@gmail.com", flight.FlightNumber, flight.DepartureTime.ToString("yyyy-MM-dd HH:mm"));
             return CreatedAtAction(nameof(GetBookingById), new { id = booking.Id }, booking);
         }
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete a booking", Description = "Deletes a specific flight booking by its unique identifier.")]
+
         public async Task<IActionResult> DeleteBooking(int id)
         {
-            var booking = await _context.FlightBooks.FindAsync(id);
+            var booking = await _context.FlightBook.FindAsync(id);
             if (booking == null)
                 return NotFound("Booking not found.");
 
-            _context.FlightBooks.Remove(booking);
+            _context.FlightBook.Remove(booking);
             await _context.SaveChangesAsync();
             return NoContent();
         }

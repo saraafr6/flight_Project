@@ -7,7 +7,7 @@ namespace Infrastructure.Data
     public class FlyDbContext : DbContext
     {
         public DbSet<Flight> Flight { get; set; }
-        public DbSet<FlightBook> FlightBooks { get; set; }
+        public DbSet<FlightBook> FlightBook { get; set; }
         public DbSet<User> User { get; set; }
         
 

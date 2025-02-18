@@ -17,42 +17,42 @@ namespace Infrastructure.Data
 
         public async Task<List<FlightBook>> GetFlightBooksAsync()
         {
-            return await _context.FlightBooks.ToListAsync();
+            return await _context.FlightBook.ToListAsync();
         }
 
         public async Task<FlightBook> GetFlightBookByIdAsync(Guid id)
         {
-            return await _context.FlightBooks.FindAsync(id);
+            return await _context.FlightBook.FindAsync(id);
         }
 
         public async Task AddFlightBookAsync(FlightBook flightBook)
         {
-            await _context.FlightBooks.AddAsync(flightBook);
+            await _context.FlightBook.AddAsync(flightBook);
 
             await _context.SaveChangesAsync();
         }
         public async Task UpdateFlightBookAsync(FlightBook flightBook)
         {
-            _context.FlightBooks.Update(flightBook);
+            _context.FlightBook.Update(flightBook);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteFlightBookAsync(FlightBook flightBook)
         {
-            _context.FlightBooks.Remove(flightBook);
+            _context.FlightBook.Remove(flightBook);
             await _context.SaveChangesAsync();
         }
 
         public async Task<List<FlightBook>> GetActiveBookingsByUserAsync(Guid userId)
         {
-            return await _context.FlightBooks
+            return await _context.FlightBook
                 .Where(b => b.UserId == userId && b.IsActive == true)
                 .ToListAsync();
         }
 
         public async Task<List<FlightBook>> GetAllBookingsByUserAsync(Guid userId)
         {
-            return await _context.FlightBooks
+            return await _context.FlightBook
                 .Where(b => b.UserId == userId)
                 .ToListAsync();
         }
